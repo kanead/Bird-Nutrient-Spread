@@ -1,0 +1,62 @@
+##------------------------------------------------------------------------##
+########## CODE FOR COMPARING VULTURE AND HYENA NUTRIENT TRANSFER ##########
+##------------------------------------------------------------------------##
+
+##------------------------------------------------------------------------##
+## Foraging Radius for Hyenas
+##------------------------------------------------------------------------##
+e = 3.4*10^7 # energy density of meat J
+Ema = 89 # BMR of adult Watts
+Emc = 26 # BMR of juvenile 
+k = 120 # cost of travel J/m
+V=c(0.76, 2.03, 3.3) # walking speeds m/s
+
+# Equation for foraging radius in meters is:
+e*V/(3.3*(Ema+2*Emc)+2*k*V)
+
+##------------------------------------------------------------------------##
+## Foraging Radius for Ruppell's Vultures
+##------------------------------------------------------------------------##
+e = 7.8*10^6 # energy density of meat
+Ema = 24 # BMR of adult
+Emc = 42 # BMR of juvenile
+k = 2 # cost of travel
+V = 12 # flying speeds m/s
+
+# Equation for foraging radius in meters is:
+e*V/(12*(Ema+0.5*Emc)+2*k*V)
+
+##------------------------------------------------------------------------##
+## Hyena Density in individuals per km^2
+##------------------------------------------------------------------------##
+hyena_density <-c(1.34,0.86,0.94,0.17,0.96,1.65,1.7,0.74,0.31,0.07,0.05,0.02,0.21,0.13,0.09,0.09,0.135,0.00625,0.44,0.48,0.009,0.13,0.0625,0.41)
+length(hyena_density)
+mean(hyena_density)
+
+##------------------------------------------------------------------------##
+## Food and Foraging for Hyenas
+##------------------------------------------------------------------------##
+food = 4.7 # daily food consumption in kg/day/hyena
+clan = 29 # mean clan size
+perc = 33.5 # % of food derived from carrion
+dist = 20 # km mean distance traveled per day
+
+
+(food*perc/100)*clan # 1.5745 kg of flesh is from carrion per day
+			   # this is 46 kg of flesh from carrion per clan per day
+
+pi*20^2 # area of circle with radius defined by foraging radius of hyena, 1257km^2
+
+##------------------------------------------------------------------------##
+## Food and Foraging for Vultures
+##------------------------------------------------------------------------##
+food = 0.470 # daily food consumption in kg/day/vulture
+roost = 200 # mean roost size ?
+perc = 100 # % of food derived from carrion
+dist = 40 # km mean distance traveled per day
+
+(food*perc/100)*roost # 94 kg of flesh per roost per day
+
+pi*40^2 # area of circle with radius defined by foraging radius of vulture, 5000km^2
+
+
