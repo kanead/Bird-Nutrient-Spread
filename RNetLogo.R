@@ -181,8 +181,27 @@ for (i in 1:length(x)) lines(c(x[i],x[nn[i]]),c(y[i],y[nn[i]]))
 ## this calculates mean nearest neighbour distance
 # mean(r)
 
+##---------------------------------------------------------------
+## This speeds up the model greatly 
+##---------------------------------------------------------------
+
+nutrients <- list()
+
+NLCommand("setup")
+
+# run for N days:
+for (day in 1:5) {
+  NLCommand("repeat 36000 [go]")
+  agent_set <- NLGetAgentSet(c("who", "xcor", "ycor"),
+                             "nutrients")
+  names(agent_set) <- c("who", "xcor", "ycor")
+  agent_set$day = day
+  nutrients[[day]] <- agent_set
+  # NLCommand("create-next-day")
+}
 
 
+#ifelse-value(nutrients => 1)
 
 
 

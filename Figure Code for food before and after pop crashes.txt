@@ -1,0 +1,76 @@
+##----------------------------------------------------------------------------------------------------
+## Plotting Carrion Leftover after African and Asian Vulture Declines
+##----------------------------------------------------------------------------------------------------
+require(lattice)
+require(ggplot2)
+setwd("C:/Users/Adam/Desktop/Science/Manuscripts/Nutrients and Birds/data")
+dir()
+##----------------------------------------------------------------------------------------------------
+mydata<-read.csv("africa_asia_vultures.csv", header=T,sep=",")
+head(mydata)
+names(mydata)
+
+## Decreasing switches order of data
+asiabefore<-sort(mydata$before_t[mydata$area=="asia"], decreasing = T)
+asiaafter<-sort(mydata$after_t[mydata$area=="asia"], decreasing = T)
+africabefore<-sort(mydata$before_t[mydata$area=="africa"], decreasing = T)
+africaafter<-sort(mydata$after_t[mydata$area=="africa"], decreasing = T)
+
+#africabefore<-mydata$before_t[mydata$area=="africa"]
+#africabefore<-sort(mydata$before_t[mydata$area=="africa"], decreasing = F)
+#africabefore<-(mydata$before_t[mydata$area=="africa"])
+#logafricabefore<-log10(mydata$before_t[mydata$area=="africa"])
+
+## create a vector of vulture species names 
+## first African
+#africanvuls <- c("G. barbatus", "T. tracheliotos", "G. coprotheres", "T. occipitalis", 
+#"G. rueppellii", "N. percnopterus", "N. monachus", "G. africanus")
+
+## Initials 
+afin <- c("G. b.", "T. t.", "G. c.", "T. o.", "G. r.", "N. p.", "N. m.", "G. a.")
+
+## then Asian
+#asianvuls <- c("G. tenuirostris", "S. calvus", "G. indicus", "G. bengalensis")
+asin <- c("G. t.", "S. c.", "G. i.", "G. be.")
+
+## Create a 4 panel plot
+par(mfrow=c(2,2))
+
+## Plot with numbers for species names - Africa before
+barplot(africabefore, main="Africa Today", xlab="Species", ylab="Tonnes of Carrion per Year", 
+names.arg=afin, border="black")
+
+## Plot Africa after
+barplot(africaafter, main="Africa After", xlab="Species", ylab="Tonnes of Carrion per Year", 
+names.arg=afin, border="black")
+
+## Plot with numbers for species names - Asia before
+barplot(asiabefore, main="Asia Before", xlab="Species", ylab="Tonnes of Carrion per Year", 
+names.arg=asin, border="black")
+
+## Plot Asia after
+barplot(asiaafter, main="Asia After", xlab="Species", ylab="Tonnes of Carrion per Year", 
+names.arg=asin, border="black")
+
+##----------------------------------------------------------------------------------------------------
+## Other options
+##----------------------------------------------------------------------------------------------------
+## Simple Plot 
+#barplot(africabefore, main="Africa Today", xlab="Species", ylab="Tonnes of Carrion per Year", 
+#names.arg=africanvuls, border="black")
+
+## Plot with rotated labels
+#par(mar = c(7, 4, 4, 2) + 0.1)
+#x <- barplot(africabefore, xaxt="n")
+#labs <- africanvuls
+#text(cex=0.9, x=x-.1, y=-1.25, labs, xpd=T, srt=45, pos=2.5)
+
+## Plot with numbers for species names
+#barplot(africabefore, main="Africa Today", xlab="Species", ylab="Tonnes of Carrion per Year", 
+#names.arg=c(1:8), border="black")
+
+## Plot with log values for carrion
+#barplot(logafricabefore, main="Africa Today", xlab="Species", ylab="Log Tonnes of Carrion per Year", 
+#names.arg=c(1:8), border="black")
+
+
