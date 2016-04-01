@@ -256,10 +256,10 @@ day
 11
 
 INPUTBOX
-7
-249
-162
-309
+8
+228
+163
+288
 excretion-rate
 100000
 1
@@ -287,7 +287,7 @@ INPUTBOX
 162
 372
 day-length
-27000
+20000
 1
 0
 Number
@@ -304,11 +304,11 @@ v-vulture
 Number
 
 TEXTBOX
-9
-375
-175
+8
+409
+174
 439
-3 hours in seconds = 10800\n5 hours in seconds = 18000\n6 hours in seconds = 21600\n7 hours in seconds = 25200
+assume animals are awake for 12 hours = 43200 seconds\n
 12
 0.0
 0
