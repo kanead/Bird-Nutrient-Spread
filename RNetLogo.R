@@ -177,9 +177,8 @@ sd(nndistListHy)
 nndistListVul<-by(vulNuts[, 2:3], vulNuts$day, meanNearNeigbDist)
 mean(nndistListVul)
 sd(nndistListVul)
-
-
 #################################################################
+## End of Working Code
 #################################################################
 nndistListDF<-do.call(rbind.data.frame, nndistList)
 
@@ -200,9 +199,7 @@ yt<-cut(y,seq(0,220,1))
 count<-as.vector(table(xt,yt))
 table(count)
 sum(table(count))
-#################################################################
-## End of Code
-#################################################################
+
 
 ##-----------------------------------------------------------------------
 ## runs the model for nruns ticks and then collects data on vulturecoords
