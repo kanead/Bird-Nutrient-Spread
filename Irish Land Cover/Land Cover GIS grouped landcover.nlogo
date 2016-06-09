@@ -1,5 +1,5 @@
 extensions[gis]
-globals [ireland patch-scale day freshwater fresh-nutrients other-nutrients]
+globals [ireland patch-scale day freshwater ocean land fresh-nutrients other-nutrients]
 breed [gulls gull]
 breed [nutrients nutrient]
 breed [foods food]
@@ -16,20 +16,20 @@ to setup-ireland
   ask patches [set pcolor white ]
   ask patch 0 0
  [
-    set pcolor yellow
-    ask patches in-radius 16 [set pcolor yellow]
+    set pcolor blue
+    ask patches in-radius 80 [set pcolor blue]
   ]
 
   create-gulls n-gulls [set color white
   setxy 0 0
-  set size 0.6
+  set size 1
   set shape "hawk"
-  set energy 108000 ;; 3 hours flight time, 3 hours to fly back
-  set heading random 360
+  set energy 10800 ;; 3 hours flight time, 3 hours to fly back
+  ;set heading random 360
+  ;face patch -11 10
  ]
-;  set freshwater gis:load-dataset "WFD_Transitional_Waterbodies_ITM.shp"
-   set ireland gis:load-dataset "land use by gull radius.shp"
-
+ ;  set ireland gis:load-dataset "land use by gull radius.shp"
+    set ireland gis:load-dataset "40km gull radius .shp"
   gis:set-world-envelope gis:envelope-of ireland
 
   foreach gis:feature-list-of ireland
@@ -59,7 +59,7 @@ to setup-ireland
     if gis:property-value ? "CODE_12" = "142" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; sport and leisure facilities
     if gis:property-value ? "CODE_12" = "141" [ gis:set-drawing-color 63  gis:fill ? 2.0] ;; green urban areas
     if gis:property-value ? "CODE_12" = "133" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; construction sites
-    if gis:property-value ? "CODE_12" = "132" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; dump sites
+    if gis:property-value ? "CODE_12" = "132" [ gis:set-drawing-color orange  gis:fill ? 2.0] ;; dump sites
     if gis:property-value ? "CODE_12" = "131" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; mineral extraction sites
     if gis:property-value ? "CODE_12" = "124" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; airports
     if gis:property-value ? "CODE_12" = "123" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; port areas
@@ -69,60 +69,24 @@ to setup-ireland
     if gis:property-value ? "CODE_12" = "111" [ gis:set-drawing-color grey  gis:fill ? 2.0] ;; continuous urban fabric
     ]
 
-
-
-
-
-
-
-
-
-
-;  gis:apply-coverage ireland "CODE_12" landcover
-;let vf gis:find-range ireland "CODE_12" "411" "523" ;; include values for water features but none for ocean
-;foreach vf [
-;   let loc gis:location-of (last (last (gis:vertex-lists-of ?)))
-;   create-foods 1  [setxy item 0 loc item 1 loc
-;     set shape "circle"
-;     set size 0.3
-;     set color yellow
-;     ]
-;]
-
-;let vf gis:find-range ireland "CODE_12" "411" "523" ;; include values for water features but none for ocean
-;foreach vf [
-;   let loc gis:location-of (item 0 (first (gis:vertex-lists-of ?)))
-;   create-foods 1  [setxy item 0 loc item 1 loc
-;     set shape "circle"
-;     set size 0.3
-;     set color yellow
-;     ]
-;]
-
-
-;let vf2 gis:find-range ireland "CODE_12" "411" "523" ;; include values for water features but none for ocean
-;foreach vf2 [
-;   let loc gis:location-of gis:centroid-of ?
-;   create-foods 1  [setxy item 0 loc item 1 loc
-;     set shape "circle"
-;     set size 0.3
-;     set color orange
-;     ]
-;]
-
-;ask foods [hatch-foods 3
-;    ifelse gis:intersects? vf self [
-;      set shape "circle"
-;     set size 0.3
-;     set color yellow
-;    ]
-;    [die]
-;  ]
-
+;; ask the patches to assume the landcover value for the vector that takes up most of the space over them
+  gis:apply-coverage ireland "CODE_12" landcover
+;##################
+;; Group the Land Cover Data
+;##################
 set freshwater gis:find-range ireland "CODE_12" "411" "523" ;; include values for water features but none for ocean
+set ocean gis:find-features ireland "CODE_12" "523"
+set land gis:find-range ireland "CODE_12" "110" "334" ;; include values for water features but none for ocean
+
+
+if foods? [
+;##################
+;; Freshwater Code
+;##################
+
 foreach freshwater
   [ foreach  gis:vertex-lists-of ?
-    [foreach n-of 1 ? ;; added n-of 10 here
+    [foreach  ? ;; can add n-of x here to specify the number of food items produced per patch
       [ let location gis:location-of ?
         if not empty? location
         [ create-foods 1
@@ -134,8 +98,43 @@ foreach freshwater
              ] ]
       ] ] ]
 
+ask n-of n-freshfoods foods [set color pink]
+ask foods with [color != pink][die]
+;##################
+;; Ocean Code
+;##################
+; ask patches with [landcover = "523"] [set pcolor blue]
+ask n-of n-seafoods patches with [landcover = "523" and pcolor = yellow] [sprout-foods 1 [
+  set shape "circle"
+     set size 0.2
+     set color pink
+]
+]
 
+;##################
+;; Land Code
+;##################
 
+foreach land
+  [ foreach  gis:vertex-lists-of ?
+    [foreach  ? ;; added n-of 10 here
+      [ let location gis:location-of ?
+        if not empty? location
+        [ create-foods 1
+          [ set xcor item 0 location
+            set ycor item 1 location
+            set shape "circle"
+     set size 0.2
+     set color blue
+             ] ]
+      ] ] ]
+
+ask n-of n-landfoods foods [set color pink]
+ask foods with [color != pink][die]
+]
+;##################
+;; Scale the Area
+;##################
 ;  gis:set-drawing-color blue - 1  gis:fill freshwater 1
   set patch-scale (item 1 gis:world-envelope - item 0 gis:world-envelope ) / world-width
 ;; check the size of the area
@@ -184,7 +183,6 @@ to move
       set energy  energy  - 1
    ifelse color = white  [fd v]
     [fd v / 4]
-
       if random 600 = 1 ;; frequency of turn
   [ ifelse random 2 = 0 ;; 50:50 chance of left or right
     [ rt 30 ] ;; could add some variation to this with random-normal 45 5
@@ -212,13 +210,13 @@ end
  to rtb
   if energy <= 0 [
    face patch 0 0
-    ]
+    if patch-here = [0 0] [face patch 0 16]]
 end
 
 to territory
    while [[pcolor] of patch-here = white]
     [
-      face min-one-of patches with [pcolor = yellow] [ distance myself ]
+      face min-one-of patches with [pcolor = blue] [ distance myself ]
       move
     ]
 end
@@ -226,7 +224,6 @@ end
 ;##########################################################################################
 ;; NUTRIENT COMMANDS
 ;##########################################################################################
-
 to check-water
  ; let estuaries gis:find-features ireland "CODE_12" "522" ;;BD change 1
   ; ask nutrients [   ;;BD change 4
@@ -242,27 +239,6 @@ to check-water
   ]
    ;]
 end
-
-
-
-
-;to check-water
-;  ask nutrients [
-;    ifelse [landcover] of patch-here = "523" [
-;      set color red
-;      set freshwater-nutrients freshwater-nutrients + 1
-;       die
-;      ]
-;    [
-;     set color cyan
-;     set other-nutrients other-nutrients + 1
-;       die
-;   ]
-;  ]
-;end
-
-
-
 ;##########################################################################################
 ;; RESET COMMANDS
 ;##########################################################################################
@@ -270,24 +246,24 @@ end
 to create-next-day
   clear-links
   reset-ticks
-  ask gulls [set energy 108000]
+  ask gulls [set energy 10800]
 ; ask nutrients [die]
   go
 end
-
-
-
+;##########################################################################################
+;; END OF CODE
+;##########################################################################################
 ;; lat long WGS84  to Irish Transverse Mercator Grid Co-ordinates
 ;; http://www.fieldenmaps.info/cconv/cconv_ie.html
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
 10
-850
-671
-16
-16
-19.12121212121212
+860
+681
+80
+80
+4.0
 1
 10
 1
@@ -297,10 +273,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+-80
+80
+-80
+80
 0
 0
 1
@@ -357,7 +333,7 @@ INPUTBOX
 173
 274
 excretion-rate
-680000
+68000
 1
 0
 Number
@@ -426,7 +402,7 @@ INPUTBOX
 175
 401
 v
-6.0E-4
+0.0104
 1
 0
 Number
@@ -454,29 +430,70 @@ other-nutrients
 11
 
 SLIDER
-953
-114
-1125
-147
-n-foods
-n-foods
+12
+535
+184
+568
+n-freshfoods
+n-freshfoods
 0
 100
-1
+20
 1
 1
 NIL
 HORIZONTAL
 
 TEXTBOX
-960
-262
-1110
-280
-0.0104 v
+890
+421
+941
+463
+0.0104 v for 20 km model
 11
 0.0
 1
+
+SLIDER
+14
+573
+186
+606
+n-seafoods
+n-seafoods
+0
+100
+0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+14
+613
+186
+646
+n-landfoods
+n-landfoods
+0
+100
+0
+1
+1
+NIL
+HORIZONTAL
+
+SWITCH
+14
+662
+117
+695
+foods?
+foods?
+1
+1
+-1000
 
 @#$#@#$#@
 ## Parameter estimates
@@ -821,7 +838,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.3
+NetLogo 5.2.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

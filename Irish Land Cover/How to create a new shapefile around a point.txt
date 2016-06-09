@@ -1,0 +1,17 @@
+- Make sure everything has the same CRS otherwise it won't work
+
+- Load in the point e.g. a set of coords on a csv. 
+
+- Vector -> geoprocessing tools -> buffer 
+
+- The input layer is the one containing the point 
+
+- Set the buffer distance in metres. 
+
+- Vector -> geoprocessing tools -> clip
+
+- The input layer is the base from which you cut e.g. the total land cover map
+
+- The clip layer is the cookie cutter e.g. the bird radius 
+
+

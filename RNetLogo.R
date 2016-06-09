@@ -19,8 +19,8 @@ NLLoadModel(paste(nl.path,model.path,sep=""))
 #################################################################
 ## set model parameters
 #################################################################
-NLCommand("set N-vultures 50") ## 50
-NLCommand("set N-hyenas 0") ## 30
+NLCommand("set N-vultures 0") ## 50
+NLCommand("set N-hyenas 30") ## 30
 NLCommand("set v-vulture 0.00667") ## 0.00667
 NLCommand("set v-hyena 0.00111") ## 0.00111
 #################################################################
@@ -46,7 +46,7 @@ vultureNutrientsDF<-do.call(rbind.data.frame, vultureNutrients)
 
 ## can save results to .csv
 # setwd("C:/Users/akane/Desktop/Science/Manuscripts/Nutrients and Birds/data")
-write.csv(vultureNutrientsDF, file = "vulNuts.csv")
+write.csv(vultureNutrientsDF, file = "hyNoTerr10.csv")
 
 # countNutrients<-by(vultureNutrientsDF[, 1], vultureNutrientsDF$day, length)
 

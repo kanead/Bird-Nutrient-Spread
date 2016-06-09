@@ -1,4 +1,28 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{ogada2012dropping}
+Ogada DL, Keesing F, Virani MZ.
+\newblock Dropping dead: causes and consequences of vulture population declines
+  worldwide.
+\newblock Annals of the New York Academy of Sciences. 2012;1249(1):57--71.
+
+\bibitem{benbow2015introduction}
+Benbow ME, Tomberlin JK, Tarone AM.
+\newblock Introduction to Carrion Ecology, Evolution, and Their Applications.
+\newblock Carrion Ecology, Evolution, and Their Applications. 2015;p.~1.
+
+\bibitem{peery2000factors}
+Peery MZ.
+\newblock Factors affecting interspecies variation in home-range size of
+  raptors.
+\newblock The Auk. 2000;117(2):511--517.
+
+\bibitem{beasley2015vertebrates}
+Beasley J, Olson Z, DeVault T.
+\newblock Ecological Role of Vertebrate Scavengers.
+\newblock In: Benbow ME, Tomberlin JK, Tarone AM, editors. Introduction to
+  Carrion Ecology, Evolution, and Their Applications. Boca Raton, Florida, USA:
+  CRC Press; 2015. p. 107--128.
 
 \bibitem{crollfox2015}
 Croll DA, Maron JL, Estes JA, Danner EM, Byrd GV.
@@ -13,16 +37,48 @@ Ogada D, Shaw P, Beyers RL, Buij R, Murn C, Thiollay JM, et~al.
 \newblock Conservation Letters. 2015;p. n/a--n/a.
 \newblock Available from: \url{http://dx.doi.org/10.1111/conl.12182}.
 
+\bibitem{ruxton2004obligate}
+Ruxton GD, Houston DC.
+\newblock Obligate vertebrate scavengers must be large soaring fliers.
+\newblock Journal of Theoretical Biology. 2004;228(3):431--436.
+
+\bibitem{tisue2004netlogo}
+Tisue S, Wilensky U.
+\newblock Netlogo: A simple environment for modeling complexity.
+\newblock In: International Conference on Complex Systems; 2004. p. 16--21.
+
+\bibitem{holekamp2010intraspecific}
+Holekamp KE, Dloniak SM.
+\newblock Intraspecific variation in the behavioral ecology of a tropical
+  carnivore, the spotted hyena.
+\newblock Advances in the Study of Behavior. 2010;42:189--229.
+
 \bibitem{mundy1992vultures}
 Mundy PJ, Butchart D, Ledger J, Piper S.
 \newblock The vultures of Africa.
 \newblock Academic Press London; 1992.
 
-\bibitem{ruxton2003could}
-Ruxton GD, Houston DC.
-\newblock Could \textit{Tyrannosaurus rex} have been a scavenger rather than a
-  predator? An energetics approach.
-\newblock Proceedings of the Royal Society of London Series B: Biological
-  Sciences. 2003;270(1516):731--733.
+\bibitem{spiegel2013factors}
+Spiegel O, Getz WM, Nathan R.
+\newblock Factors influencing foraging search efficiency: why do scarce
+  lappet-faced vultures outperform ubiquitous white-backed vultures?
+\newblock The American Naturalist. 2013;181(5):E102--E115.
+
+\bibitem{steyn1972further}
+Steyn P.
+\newblock Further observations on the brown snake eagle.
+\newblock Ostrich. 1972;43(3):149--164.
+
+\bibitem{marucco2008accuracy}
+Marucco F, Pletscher DH, Boitani L.
+\newblock Accuracy of scat sampling for carnivore diet analysis: wolves in the
+  Alps as a case study.
+\newblock Journal of Mammalogy. 2008;89(3):665--673.
+
+\bibitem{mills1987scent}
+Mills M, Gorman M.
+\newblock The scent-marking behaviour of the spotted hyaena Crocuta crocuta in
+  the southern Kalahari.
+\newblock Journal of Zoology. 1987;212(3):483--497.
 
 \end{thebibliography}
